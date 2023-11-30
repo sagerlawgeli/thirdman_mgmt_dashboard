@@ -42,4 +42,16 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    // One-to-One relationship with Customer
+    public function customer()
+    {
+        return $this->hasOne(Customer::class);
+    }
+
+    // One-to-One relationship with Agent
+    public function agent()
+    {
+        return $this->hasOne(Agent::class);
+    }
 }
