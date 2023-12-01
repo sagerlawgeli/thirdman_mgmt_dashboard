@@ -26,7 +26,11 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
+            ->brandLogo(fn () => view('filament.admin.logo'))
+            ->favicon(asset('images/tm-logo.jpg'))
+            ->sidebarCollapsibleOnDesktop()
             ->login()
+            ->registration()
             ->spa()
             ->colors([
                 'primary' => Color::Amber,
