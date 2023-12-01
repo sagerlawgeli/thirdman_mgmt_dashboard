@@ -17,7 +17,9 @@ class TrackerDeviceResource extends Resource
 {
     protected static ?string $model = TrackerDevice::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-m-device-phone-mobile';
+
+    protected static ?string $navigationGroup = 'Products';
 
     public static function form(Form $form): Form
     {
