@@ -5,12 +5,17 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\SubscriptionResource\Pages;
 use App\Filament\Resources\SubscriptionResource\RelationManagers;
 use App\Models\Subscription;
+use App\Models\User;
 use Filament\Forms;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class SubscriptionResource extends Resource
@@ -25,15 +30,32 @@ class SubscriptionResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('customer_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('agent_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('tracker_device_id')
-                    ->required()
-                    ->numeric(),
+                Section::make()
+                    ->schema([
+                        Select::make('customer_id')
+                            ->label(__('Customer'))
+                            ->required()
+                            ->relationship('customer', 'id')
+                            ->getOptionLabelFromRecordUsing(fn (Model $record) => $record->user->name)
+                            ->createOptionForm([
+                                Select::make('user_id')
+                                    ->required()
+                                    ->relationship('user', 'name', fn ($query) => $query->where('role', 'customer'))
+                            ]),
+                        Select::make('tracker_device_id')
+                            ->label(__('Device'))
+                            ->required()
+                            ->relationship('trackerDevice', 'name', fn ($query) => $query->whereNotIn('id', Subscription::pluck('tracker_device_id')->all())),
+                        Select::make('agent_id')
+                            ->label(__('Agent'))
+                            ->relationship('agent', 'id')
+                            ->getOptionLabelFromRecordUsing(fn (Model $record) => $record->user->name)
+                            ->createOptionForm([
+                                Select::make('user_id')
+                                    ->required()
+                                    ->relationship('user', 'name', fn ($query) => $query->where('role', 'agent'))
+                            ]),
+                    ])
             ]);
     }
 
@@ -41,20 +63,27 @@ class SubscriptionResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('customer_id')
+                TextColumn::make('id')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('agent_id')
-                    ->numeric()
+                TextColumn::make('customer.user.name')
+                    ->label(__('Customer'))
                     ->sortable(),
-                Tables\Columns\TextColumn::make('tracker_device_id')
-                    ->numeric()
+                TextColumn::make('agent.user.name')
+                    ->label(__('Agent'))
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('trackerDevice.name')
+                    ->label(__('Device'))
+                    ->sortable(),
+                TextColumn::make('trackerDevice.renewal_date')
+                    ->label(__('Renewal Date'))
+                    ->date()
+                    ->sortable(),
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
