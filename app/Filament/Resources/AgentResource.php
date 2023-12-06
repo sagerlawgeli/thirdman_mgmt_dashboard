@@ -6,6 +6,8 @@ use App\Filament\Resources\AgentResource\Pages;
 use App\Filament\Resources\AgentResource\RelationManagers;
 use App\Models\Agent;
 use Filament\Forms;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -25,9 +27,12 @@ class AgentResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('user_id')
-                    ->required()
-                    ->numeric(),
+                Section::make('Agent Details')
+                    ->schema([
+                        Select::make('user_id')
+                            ->required()
+                            ->relationship('user', 'name', fn ($query) => $query->where('role', 'agent'))
+                    ])
             ]);
     }
 
