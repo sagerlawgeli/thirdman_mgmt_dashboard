@@ -6,6 +6,7 @@ use App\Filament\Resources\TrackerDeviceResource\Pages;
 use App\Filament\Resources\TrackerDeviceResource\RelationManagers;
 use App\Models\TrackerDevice;
 use Filament\Forms;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -25,26 +26,36 @@ class TrackerDeviceResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('size')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('brand')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\FileUpload::make('image')
-                    ->image()
-                    ->required(),
-                Forms\Components\TextInput::make('brand_specific_id')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\DatePicker::make('purchase_date')
-                    ->required(),
-                Forms\Components\Toggle::make('renewable')
-                    ->required(),
-                Forms\Components\DatePicker::make('renewal_date'),
+                Section::make('Device Details')
+                    ->schema([
+                        Forms\Components\TextInput::make('name')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('size')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('brand')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\FileUpload::make('image')
+                            ->image()
+                            ->required(),
+                    ])->columns(2),
+                Section::make('Vendor Specific Details')
+                    ->schema([
+                        Forms\Components\TextInput::make('brand_specific_id')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('registered_email')
+                            ->required()
+                            ->email()
+                            ->maxLength(255),
+                        Forms\Components\DatePicker::make('purchase_date')
+                            ->required(),
+                        Forms\Components\Toggle::make('renewable')
+                            ->required(),
+                        Forms\Components\DatePicker::make('renewal_date'),
+                    ])->columns(2)
             ]);
     }
 
