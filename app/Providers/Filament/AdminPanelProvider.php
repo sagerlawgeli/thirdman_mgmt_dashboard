@@ -29,6 +29,7 @@ class AdminPanelProvider extends PanelProvider
             ->brandLogo(fn () => view('filament.admin.logo'))
             ->favicon(asset('images/tm-logo.jpg'))
             ->sidebarCollapsibleOnDesktop()
+            ->viteTheme('resources/css/filament/admin/theme.css')
             ->login()
             ->registration()
             ->spa()
