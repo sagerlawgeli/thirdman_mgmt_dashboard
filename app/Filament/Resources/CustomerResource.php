@@ -9,6 +9,7 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -37,6 +38,15 @@ class CustomerResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('user_id')
                     ->numeric()
+                    ->sortable(),
+                TextColumn::make('user.name')
+                    ->label(__('Name'))
+                    ->sortable(),
+                TextColumn::make('user.dob')
+                    ->label(__('Date of Birth'))
+                    ->sortable(),
+                TextColumn::make('user.city')
+                    ->label(__('City'))
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
