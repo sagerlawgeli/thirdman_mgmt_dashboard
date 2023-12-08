@@ -19,4 +19,9 @@ class Customer extends Model
     {
         return $this->hasMany(Subscription::class);
     }
+
+    public function sessions()
+    {
+        return $this->hasMany(Session::class);
+    }
 }
