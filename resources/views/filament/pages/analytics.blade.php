@@ -61,7 +61,7 @@
             <div class="col-span-1 card bg-zinc-900">
                 <div class="shadow-lg rounded-lg p-4 max-w-sm">
                     <div class="flex justify-between items-center mb-4">
-                        <span class="text-slate-100 text-cyan-500 font-bold">TEAM AVG.</span>
+                        <span class="text-slate-100 font-bold">TEAM AVG.</span>
                         <span class="text-orange-500 font-bold">ATHLETE</span>
                     </div>
                     <div class="flex justify-around items-center h-64">
@@ -93,7 +93,7 @@
             <div class="col-span-1 card bg-zinc-900">
                 <div class="shadow-lg rounded-lg p-4 max-w-sm">
                     <div class="flex justify-between items-center mb-4">
-                        <span class="text-slate-100 text-cyan-500 font-bold">TEAM AVG.</span>
+                        <span class="text-slate-100font-bold">TEAM AVG.</span>
                         <span class="text-orange-500 font-bold">ATHLETE</span>
                     </div>
                     <div class="flex justify-around items-center h-64">
